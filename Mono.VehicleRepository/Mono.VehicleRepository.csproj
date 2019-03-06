@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mono.DBContext\Mono.DBContext.csproj" />
+    <ProjectReference Include="..\Mono.Models\Mono.Models.csproj" />
+    <ProjectReference Include="..\Mono.VehicleRepository.Common\Mono.VehicleRepository.Common.csproj" />
+  </ItemGroup>
+
+</Project>
