@@ -10,34 +10,28 @@ using Mono.Models.Common;
 
 namespace CodeEFTest
 {
-    class VehicleRepository : IVehicleRepository
+    public class VehicleRepository : IVehicleRepository
     {
-        public IVehicleRepository Context { get; private set; }
+        public IGenericRepository GenericRpContext { get; private set; }
 
-        public VehicleRepository(IVehicleRepository context)
+        public VehicleRepository(IGenericRepository GenericRpContext)
         {
-            this.Context = context;
-        }
-        public List<VehicleModel> GetVehicleModels()
-        {
-            VehicleDBContext vehicleDBContext = new VehicleDBContext();
-            return vehicleDBContext.Vehicles.ToList();
+            this.GenericRpContext = GenericRpContext;
         }
 
-        public List<IVehicle> GetVehicles()
+        public async Task<IEnumerable<IVehicle>> GetVehiclesAsync()
         {
-            return Context.GetVehicles();
+            return await GenericRpContext.GetAll<IVehicle>();
         }
 
-        public bool AddVehicleToSelection(int makeId)
+        public Task<int> AddVehicleToSelectionAsync(int makeId)
         {
-            return Context.AddVehicleToSelection(makeId);
+            return await GenericRpContext.Add<IVehicle>();
         }
 
-        public bool RemoveVehicleFromSelection(int makeId)
+        public Task<int> RemoveVehicleFromSelectionAsync(int makeId)
         {
-            return Context.RemoveVehicleFromSelection(makeId);
+            throw new NotImplementedException();
         }
-
     }
 }
