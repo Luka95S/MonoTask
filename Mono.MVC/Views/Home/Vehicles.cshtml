@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Mono.MVC.Models.VehicleMakeViewModel>
+﻿@model List<Mono.Models.VehicleMake>
 @{
     ViewData["Title"] = "Vehicles";
 }
@@ -11,7 +11,7 @@
         <th>Abrv</th>
     </tr>
     @foreach (var vehicle in Model)
-    {
+        {
         <tr>
             <td>@vehicle.Id</td>
             <td>@vehicle.Name</td>

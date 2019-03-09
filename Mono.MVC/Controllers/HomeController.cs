@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using Mono.Models;
 using Mono.MVC.Models;
 using Mono.Services.Common;
 
@@ -12,10 +14,12 @@ namespace Mono.MVC.Controllers
     public class HomeController : Controller
     {
         private readonly IVehicleService vehicleService;
+        private readonly IMapper mapper;
 
-        public HomeController(IVehicleService vehicleService)
+        public HomeController(IVehicleService vehicleService, IMapper mapper)
         {
             this.vehicleService = vehicleService;
+            this.mapper = mapper;
         }
         public IActionResult Index()
         {
@@ -24,7 +28,8 @@ namespace Mono.MVC.Controllers
 
         public async Task<IActionResult> Vehicles()
         {
-            return View(await vehicleService.GetAllVehiclesAsync());
+            var alo = await vehicleService.GetAllVehiclesAsync();
+            return View(mapper.Map<VehicleMake>(alo));
         }
     }
 }

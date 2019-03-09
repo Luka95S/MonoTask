@@ -1,8 +1,8 @@
-﻿using Mono.DBContext;
+﻿using Microsoft.EntityFrameworkCore;
+using Mono.DBContext;
 using Mono.VehicleRepository.Common;
 using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;

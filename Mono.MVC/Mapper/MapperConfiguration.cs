@@ -15,7 +15,10 @@ namespace Mono.MVC.Mapper
         {
             CreateMap<IVehicle, VehicleMake>().ReverseMap();
             CreateMap<IVehicle, VehicleModel>().ReverseMap();
-            CreateMap<IVehicle, VehicleMakeViewModel>().ReverseMap();
+            CreateMap<VehicleMakeViewModel, IVehicle>().ReverseMap();
+               // .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
+               // .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
+               // .ForMember(d => d.Abrv, o => o.MapFrom(s => s.Abrv));
         }
     }
 }

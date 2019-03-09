@@ -15,24 +15,26 @@ namespace Mono.VehicleRepository
     {
         public IGenericRepository GenericRpContext { get; private set; }
 
-        public VehicleRepository(IGenericRepository GenericRpContext)
+        private readonly IMapper mapper;
+        public VehicleRepository(IGenericRepository GenericRpContext, IMapper mapper)
         {
             this.GenericRpContext = GenericRpContext;
+            this.mapper = mapper;
         }
 
         public async Task<IEnumerable<IVehicle>> GetVehiclesAsync()
         {
-            return AutoMapper.Mapper.Map<IEnumerable<IVehicle>>(await GenericRpContext.GetAll<VehicleMake>());
+            return mapper.Map<IEnumerable<IVehicle>>(await GenericRpContext.GetAll<VehicleMake>());
         }
 
         public async Task<int> AddVehicleMakeToSelectionAsync(IVehicle vehicleMake)
         {
-            return await GenericRpContext.Add<IVehicle>(AutoMapper.Mapper.Map<VehicleMake>(vehicleMake));
+            return await GenericRpContext.Add<IVehicle>(mapper.Map<VehicleMake>(vehicleMake));
         }
 
         public async Task<int> RemoveVehicleFromSelectionAsync(IVehicle vehicleMake)
         {
-            return await GenericRpContext.Delete<IVehicle>(AutoMapper.Mapper.Map<VehicleMake>(vehicleMake));
+            return await GenericRpContext.Delete<IVehicle>(mapper.Map<VehicleMake>(vehicleMake));
         }
     }
 }
