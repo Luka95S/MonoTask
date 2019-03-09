@@ -11,8 +11,8 @@ namespace Mono.VehicleRepository.Common
         #region Methods
         
         Task<IEnumerable<IVehicle>> GetVehiclesAsync();
-        Task<int> AddVehicleToSelectionAsync(int makeId);
-        Task<int> RemoveVehicleFromSelectionAsync(int makeId);
+        Task<int> AddVehicleMakeToSelectionAsync(IVehicle vehicleMake);
+        Task<int> RemoveVehicleFromSelectionAsync(IVehicle vehicleMake);
         
 
         #endregion Methods

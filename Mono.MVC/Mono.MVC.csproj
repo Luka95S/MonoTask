@@ -5,9 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="3.0.0-preview3.19153.1" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.0.0-preview3.19153.1" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.0.3" />
   </ItemGroup>
 
   <ItemGroup>
@@ -16,6 +18,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Mono.DBContext\Mono.DBContext.csproj" />
+    <ProjectReference Include="..\Mono.Models.Common\Mono.Models.Common.csproj" />
+    <ProjectReference Include="..\Mono.Models\Mono.Models.csproj" />
+    <ProjectReference Include="..\Mono.Services.Common\Mono.Services.Common.csproj" />
+    <ProjectReference Include="..\Mono.Services\Mono.Services.csproj" />
+    <ProjectReference Include="..\Mono.VehicleRepository.Common\Mono.VehicleRepository.Common.csproj" />
+    <ProjectReference Include="..\Mono.VehicleRepository\Mono.VehicleRepository.csproj" />
   </ItemGroup>
 
 </Project>

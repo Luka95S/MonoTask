@@ -41,7 +41,7 @@ namespace Mono.VehicleRepository
 
         public async Task<T> GetWhere<T>(Expression<Func<T, bool>> match) where T : class
         {
-            return await Context.Set<T>().FirstAsync(match);
+            return await Context.Set<T>().FirstOrDefaultAsync(match);
         }
 
 

@@ -2,7 +2,7 @@
 
 namespace Mono.Models
 {
-    public class VehicleModel : IVehicle
+    public class VehicleModel
     {
         public int Id { get; set; }
         public int MakeId{ get; set; }

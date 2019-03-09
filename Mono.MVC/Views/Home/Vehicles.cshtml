@@ -1,0 +1,21 @@
+﻿@model IEnumerable<Mono.MVC.Models.VehicleMakeViewModel>
+@{
+    ViewData["Title"] = "Vehicles";
+}
+
+<h2>Vehicles</h2>
+<table style="width:100%">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Abrv</th>
+    </tr>
+    @foreach (var vehicle in Model)
+    {
+        <tr>
+            <td>@vehicle.Id</td>
+            <td>@vehicle.Name</td>
+            <td>@vehicle.Abrv</td>
+        </tr>
+    }
+</table>

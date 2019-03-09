@@ -5,33 +5,26 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Mono.MVC.Models;
+using Mono.Services.Common;
 
 namespace Mono.MVC.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IVehicleService vehicleService;
+
+        public HomeController(IVehicleService vehicleService)
+        {
+            this.vehicleService = vehicleService;
+        }
         public IActionResult Index()
         {
             return View();
         }
 
-        public IActionResult About()
+        public async Task<IActionResult> Vehicles()
         {
-            ViewData["Message"] = "Your application description page.";
-
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
-
-            return View();
-        }
-
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View(await vehicleService.GetAllVehiclesAsync());
         }
     }
 }

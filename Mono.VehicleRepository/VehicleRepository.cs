@@ -7,8 +7,9 @@ using Mono.Models;
 using Mono.DBContext;
 using Mono.VehicleRepository.Common;
 using Mono.Models.Common;
+using AutoMapper;
 
-namespace CodeEFTest
+namespace Mono.VehicleRepository
 {
     public class VehicleRepository : IVehicleRepository
     {
@@ -21,17 +22,17 @@ namespace CodeEFTest
 
         public async Task<IEnumerable<IVehicle>> GetVehiclesAsync()
         {
-            return await GenericRpContext.GetAll<IVehicle>();
+            return AutoMapper.Mapper.Map<IEnumerable<IVehicle>>(await GenericRpContext.GetAll<VehicleMake>());
         }
 
-        public Task<int> AddVehicleToSelectionAsync(int makeId)
+        public async Task<int> AddVehicleMakeToSelectionAsync(IVehicle vehicleMake)
         {
-            return await GenericRpContext.Add<IVehicle>();
+            return await GenericRpContext.Add<IVehicle>(AutoMapper.Mapper.Map<VehicleMake>(vehicleMake));
         }
 
-        public Task<int> RemoveVehicleFromSelectionAsync(int makeId)
+        public async Task<int> RemoveVehicleFromSelectionAsync(IVehicle vehicleMake)
         {
-            throw new NotImplementedException();
+            return await GenericRpContext.Delete<IVehicle>(AutoMapper.Mapper.Map<VehicleMake>(vehicleMake));
         }
     }
 }

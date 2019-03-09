@@ -9,6 +9,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mono.DBContext;
+using Mono.Services;
+using Mono.Services.Common;
+using Mono.VehicleRepository.Common;
 
 namespace Mono.MVC
 {
@@ -28,6 +31,9 @@ namespace Mono.MVC
             services.AddDbContext<VehicleDBContext>
                 (options => options.UseSqlServer(connection));
             services.AddMvc();
+            services.AddTransient<IVehicleService, VehicleSevice>();
+            services.AddTransient<IVehicleRepository, Mono.VehicleRepository.VehicleRepository>();
+            services.AddTransient<IGenericRepository, Mono.VehicleRepository.GenericRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
