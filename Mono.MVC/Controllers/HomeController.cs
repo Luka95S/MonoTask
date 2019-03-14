@@ -11,6 +11,7 @@ using Mono.Services.Common;
 
 namespace Mono.MVC.Controllers
 {
+    [Route("")]
     public class HomeController : Controller
     {
         private readonly IVehicleService vehicleService;
@@ -21,15 +22,14 @@ namespace Mono.MVC.Controllers
             this.vehicleService = vehicleService;
             this.mapper = mapper;
         }
+
+        [HttpGet("",Name="index")]
+        //home
         public IActionResult Index()
         {
             return View();
         }
 
-        public async Task<IActionResult> Vehicles()
-        {
-            var alo = await vehicleService.GetAllVehiclesAsync();
-            return View(mapper.Map<VehicleMake>(alo));
-        }
+
     }
 }

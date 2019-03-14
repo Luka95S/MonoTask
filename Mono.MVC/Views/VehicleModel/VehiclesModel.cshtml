@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Mono.MVC.Models.VehicleModelViewModel>
+@{
+    ViewData["Title"] = "VehiclesModel";
+}
+<h2>Vehicles Model</h2>
+<a class="btn theme-payment-page-signin-btn btn-primary" href="@Url.RouteUrl("add-vehicle-model")">Add Vehicle Model</a>
+<hr />
+@ViewBag.Message
+<table style="width:100%">
+    <tr>
+        <th>Vehicle Make</th>
+        <th>Name</th>
+        <th>Abrv</th>
+    </tr>
+    @foreach (var vehicleModel in Model)
+    {
+    <tr>
+        <td>@vehicleModel.VehicleName</td>
+        <td>@vehicleModel.Name</td>
+        <td>@vehicleModel.Abrv</td>
+        <td><a href="@Url.RouteUrl("edit-vehicle-model", new {id = vehicleModel.Id })">Edit</a></td>
+        <td><a href="@Url.RouteUrl("delete-vehicle-model", new { id = vehicleModel.Id })">Delete</a></td>
+    </tr>
+    }
+</table>

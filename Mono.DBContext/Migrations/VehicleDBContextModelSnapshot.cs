@@ -15,15 +15,15 @@ namespace Mono.DBContext.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.0.0-preview3.19153.1")
+                .HasDefaultSchema("Mono")
+                .HasAnnotation("ProductVersion", "2.2.2-servicing-10034")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Mono.Models.VehicleMake", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Abrv");
 
@@ -36,30 +36,18 @@ namespace Mono.DBContext.Migrations
 
             modelBuilder.Entity("Mono.Models.VehicleModel", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd();
 
                     b.Property<string>("Abrv");
 
-                    b.Property<int>("MakeId");
+                    b.Property<Guid>("MakeId");
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("VehicleMakeId");
-
                     b.HasKey("Id");
 
-                    b.HasIndex("VehicleMakeId");
-
                     b.ToTable("Vehicles");
-                });
-
-            modelBuilder.Entity("Mono.Models.VehicleModel", b =>
-                {
-                    b.HasOne("Mono.Models.VehicleMake", "VehicleMake")
-                        .WithMany("Vehicles")
-                        .HasForeignKey("VehicleMakeId");
                 });
 #pragma warning restore 612, 618
         }

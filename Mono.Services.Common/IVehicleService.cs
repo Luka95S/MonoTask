@@ -7,7 +7,11 @@ namespace Mono.Services.Common
 {
     public interface IVehicleService
     {
-        Task<IEnumerable<IVehicle>> GetAllVehiclesAsync();
+        Task<IEnumerable<IVehicleMake>> GetAllVehiclesAsync();
+        Task<IVehicleMake> GetVehicleMakeAsync(Guid id);
+        Task<int> AddVehiclesAsync(IVehicleMake vehicle);
+        Task<int> RemoveVehicleAsync(Guid id);
+        Task<int> UpdateVehicleAsync(IVehicleMake vehicle, Guid id );
 
     }
 }

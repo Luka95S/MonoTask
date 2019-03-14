@@ -1,4 +1,5 @@
-﻿using Mono.Models.Common;
+﻿using Mono.Models;
+using Mono.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,6 +9,8 @@ namespace Mono.MVC.Models
 {
     public class VehicleMakeViewModel
     {
-        public List<IVehicle> vehicles { get; set; }
+        public Guid Id { get; set; }
+        public string Name { get; set; }
+        public string Abrv { get; set; }
     }
 }

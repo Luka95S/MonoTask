@@ -9,16 +9,21 @@ using System.Threading.Tasks;
 
 namespace Mono.MVC.Mapper
 {
-    public class MapperConfiguration : Profile
+    internal class MapperConfiguration : Profile
     {
-        public void Mapping()
+        public MapperConfiguration()
         {
-            CreateMap<IVehicle, VehicleMake>().ReverseMap();
-            CreateMap<IVehicle, VehicleModel>().ReverseMap();
-            CreateMap<VehicleMakeViewModel, IVehicle>().ReverseMap();
+            CreateMap<IVehicleMake, VehicleMake>().ReverseMap();
+            CreateMap<IVehicleMake, VehicleModel>().ReverseMap();
+            CreateMap<IVehicleModel, VehicleModelViewModel>()
+                .ForMember(d => d.VehicleName, o => o.Ignore());
+            CreateMap<VehicleModelViewModel, IVehicleModel>();
+
+            CreateMap<VehicleMakeViewModel, IVehicleMake>()
                // .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
-               // .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
-               // .ForMember(d => d.Abrv, o => o.MapFrom(s => s.Abrv));
+                .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
+                .ForMember(d => d.Abrv, o => o.MapFrom(s => s.Abrv))
+                .ReverseMap();
         }
     }
 }

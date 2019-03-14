@@ -9,11 +9,13 @@ namespace Mono.VehicleRepository.Common
     public interface IVehicleRepository
     {
         #region Methods
-        
-        Task<IEnumerable<IVehicle>> GetVehiclesAsync();
-        Task<int> AddVehicleMakeToSelectionAsync(IVehicle vehicleMake);
-        Task<int> RemoveVehicleFromSelectionAsync(IVehicle vehicleMake);
-        
+
+        Task<IEnumerable<IVehicleMake>> GetVehiclesAsync();
+        Task<IVehicleMake> GetVehicleMakeAsync(Guid id);
+        Task<int> AddVehicleMakeToSelectionAsync(IVehicleMake vehicleMake);
+        Task<int> RemoveVehicleFromSelectionAsync(Guid id);
+        Task<int> UpdateVehicleFromSelectionAsync(IVehicleMake vehicleMake);
+
 
         #endregion Methods
     }

@@ -13,28 +13,39 @@ namespace Mono.VehicleRepository
 {
     public class VehicleRepository : IVehicleRepository
     {
-        public IGenericRepository GenericRpContext { get; private set; }
+        public IGenericRepository genericRepository { get; private set; }
 
         private readonly IMapper mapper;
-        public VehicleRepository(IGenericRepository GenericRpContext, IMapper mapper)
+        public VehicleRepository(IGenericRepository genericRepository, IMapper mapper)
         {
-            this.GenericRpContext = GenericRpContext;
+            this.genericRepository = genericRepository;
             this.mapper = mapper;
         }
 
-        public async Task<IEnumerable<IVehicle>> GetVehiclesAsync()
+        public async Task<IEnumerable<IVehicleMake>> GetVehiclesAsync()
         {
-            return mapper.Map<IEnumerable<IVehicle>>(await GenericRpContext.GetAll<VehicleMake>());
+            return mapper.Map<IEnumerable<IVehicleMake>>(await genericRepository.GetAll<VehicleMake>());
         }
 
-        public async Task<int> AddVehicleMakeToSelectionAsync(IVehicle vehicleMake)
+        public async Task<IVehicleMake> GetVehicleMakeAsync(Guid id)
         {
-            return await GenericRpContext.Add<IVehicle>(mapper.Map<VehicleMake>(vehicleMake));
+            return mapper.Map<IVehicleMake>(await genericRepository.Get<VehicleMake>(id));
         }
 
-        public async Task<int> RemoveVehicleFromSelectionAsync(IVehicle vehicleMake)
+        public async Task<int> AddVehicleMakeToSelectionAsync(IVehicleMake vehicleMake)
         {
-            return await GenericRpContext.Delete<IVehicle>(mapper.Map<VehicleMake>(vehicleMake));
+            return await genericRepository.Add<IVehicleMake>(mapper.Map<VehicleMake>(vehicleMake));
         }
+
+        public async Task<int> RemoveVehicleFromSelectionAsync(Guid id)
+        {
+            return await genericRepository.Delete<VehicleMake>(id);
+        }
+
+        public async Task<int> UpdateVehicleFromSelectionAsync(IVehicleMake vehicleMake)
+        {
+            return await genericRepository.Update<VehicleMake>(mapper.Map<VehicleMake>(vehicleMake));
+        }
+
     }
 }

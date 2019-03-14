@@ -14,16 +14,13 @@ namespace Mono.DBContext
 
         public VehicleDBContext CreateDbContext(string[] args)
         {
-           
-
+          
             var builder = new DbContextOptionsBuilder<VehicleDBContext>();
 
-            var connectionString = @"Data Source=DESKTOP-3D55173\SQLEXPRESS;Initial Catalog=MonoDB;Integrated Security=True";
+            var connectionString = @"Data Source=DESKTOP-3D55173\SQLEXPRESS;Initial Catalog=MonoDataBase;Integrated Security=True";
 
             builder.UseSqlServer(connectionString, o => o.MigrationsHistoryTable(VehicleDBContext.MIGRATION_HISTORY, VehicleDBContext.SCHEMA));
             return new VehicleDBContext(builder.Options);
-
-
         }
     }
 }

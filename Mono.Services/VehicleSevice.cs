@@ -15,9 +15,32 @@ namespace Mono.Services
             this.vehicleRepository = vehicleRepository;
         }
 
-        public async Task<IEnumerable<IVehicle>> GetAllVehiclesAsync()
+        public async Task<IEnumerable<IVehicleMake>> GetAllVehiclesAsync()
         {
             return await vehicleRepository.GetVehiclesAsync();
         }
-    }
+
+        public async Task<IVehicleMake> GetVehicleMakeAsync(Guid id)
+        {
+            return await vehicleRepository.GetVehicleMakeAsync(id);
+        }
+
+        public async Task<int> AddVehiclesAsync(IVehicleMake vehicle)
+        {
+            return await vehicleRepository.AddVehicleMakeToSelectionAsync(vehicle);
+        }
+
+        public async Task<int> RemoveVehicleAsync(Guid id)
+        {
+            return await vehicleRepository.RemoveVehicleFromSelectionAsync(id);
+        }
+
+        public async Task<int> UpdateVehicleAsync(IVehicleMake vehicle,Guid id)
+        {
+            vehicle.Id = id;
+            return await vehicleRepository.UpdateVehicleFromSelectionAsync(vehicle);
+        }
+
+    }   
+
 }

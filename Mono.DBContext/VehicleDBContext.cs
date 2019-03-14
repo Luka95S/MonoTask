@@ -19,15 +19,20 @@ namespace Mono.DBContext
             
         }
         #endregion
+
         #region DBSets
         public DbSet<VehicleMake> VehicleMakes { get; set; }
         public DbSet<VehicleModel> Vehicles { get; set; }
         #endregion
 
-       
-
         #region OnConfiguring 
-        // protected override void OnConfiguring(DbCon)
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.HasDefaultSchema(SCHEMA);
+            base.OnModelCreating(builder);
+        //    builder.Entity<VehicleMake>().HasKey(p => p.Id);
+        //    builder.Entity<VehicleModel>().HasKey(p => p.Id);
+        }
         #endregion
-    }
+}
 }
