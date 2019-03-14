@@ -7,11 +7,10 @@ using Mono.Models.Common;
 
 namespace Mono.Models
 {
-    public class VehicleMake : IVehicle
+    public class VehicleMake : IVehicleMake
     {
-        public int Id { get; set; }
+        public Guid Id { get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
-        public List<VehicleModel> Vehicles { get; set; }
     }
 }

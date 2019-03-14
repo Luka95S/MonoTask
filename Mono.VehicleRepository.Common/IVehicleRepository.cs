@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Mono.Models.Common;
 
 namespace Mono.VehicleRepository.Common
@@ -9,9 +10,12 @@ namespace Mono.VehicleRepository.Common
     {
         #region Methods
 
-        List<IVehicle> GetVehicles();
-        bool AddVehicleToSelection(int makeId);
-        bool RemoveVehicleFromSelection(int makeId);
+        Task<IEnumerable<IVehicleMake>> GetVehiclesAsync();
+        Task<IVehicleMake> GetVehicleMakeAsync(Guid id);
+        Task<int> AddVehicleMakeToSelectionAsync(IVehicleMake vehicleMake);
+        Task<int> RemoveVehicleFromSelectionAsync(Guid id);
+        Task<int> UpdateVehicleFromSelectionAsync(IVehicleMake vehicleMake);
+
 
         #endregion Methods
     }

@@ -1,0 +1,17 @@
+﻿
+@{
+    ViewData["Title"] = "AddVehicleModel";
+}
+
+<h2>AddVehicleModel</h2>
+
+
+<form asp-route="post-vehicles" method="post" class="container">
+    <label>Vehicle Make</label>
+    <input class="form-control" type="text" name="makeid" placeholder="" required />
+    <label>Vehicle Name</label>
+    <input class="form-control" type="text" name="name" placeholder="" required />
+    <label>Vehicle Abrv</label>
+    <input class="form-control" type="text" name="abrv" placeholder="" required />
+    <button type="submit" class="btn _tt-uc btn-primary btn-lg btn-block">Add</button>
+</form>

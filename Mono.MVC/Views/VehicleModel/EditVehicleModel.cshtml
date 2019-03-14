@@ -1,0 +1,12 @@
+﻿@model Mono.MVC.Models.VehicleModelViewModel
+@{
+    ViewData["Title"] = "EditVehicleModel";
+}
+
+<h2>EditVehicleModel</h2>
+
+<form asp-route="edit-post-vehicles" method="post" class="container">
+    <input class="form-control" type="text" name="name" placeholder="" value="@Model.Name" required />
+    <input class="form-control" type="text" name="abrv" placeholder="" value="@Model.Abrv" required />
+    <button type="submit" class="btn _tt-uc btn-primary btn-lg btn-block">Edit</button>
+</form>

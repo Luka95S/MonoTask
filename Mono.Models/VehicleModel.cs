@@ -1,14 +1,14 @@
 ﻿using Mono.Models.Common;
+using System;
 
 namespace Mono.Models
 {
-    public class VehicleModel : IVehicle
+    public class VehicleModel : IVehicleModel
     {
-        public int Id { get; set; }
-        public int MakeId{ get; set; }
+        public Guid Id { get; set; }
+        public Guid MakeId{ get; set; }
         public string Name { get; set; }
         public string Abrv { get; set; }
 
-        public VehicleMake VehicleMake { get; set; }
     }
 }

@@ -3,26 +3,36 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Data.Entity;
 using Mono.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mono.DBContext
 {
-    [Serializable]
     public class VehicleDBContext : DbContext
     {
+        public const string MIGRATION_HISTORY = "migrationName";
+        public const string SCHEMA = "Mono";
+
         #region Constructors
-        public VehicleDBContext()
+        public VehicleDBContext(DbContextOptions<VehicleDBContext> options): base(options)
         {
+            
         }
         #endregion
+
         #region DBSets
         public DbSet<VehicleMake> VehicleMakes { get; set; }
         public DbSet<VehicleModel> Vehicles { get; set; }
         #endregion
 
         #region OnConfiguring 
-        // protected override void OnConfiguring(DbCon)
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.HasDefaultSchema(SCHEMA);
+            base.OnModelCreating(builder);
+        //    builder.Entity<VehicleMake>().HasKey(p => p.Id);
+        //    builder.Entity<VehicleModel>().HasKey(p => p.Id);
+        }
         #endregion
-    }
+}
 }
