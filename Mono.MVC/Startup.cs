@@ -28,9 +28,9 @@ namespace Mono.MVC
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var connection = @"Data Source=DESKTOP-3D55173\SQLEXPRESS;Initial Catalog=MonoDataBase;Integrated Security=True";
+            var connection = Configuration.GetSection("MonoDBConnectionString").Get<DataBaseConfiguration>();
             services.AddDbContext<VehicleDBContext>
-                (options => options.UseSqlServer(connection));
+                (options => options.UseSqlServer(connection.ConnectionString));
             services.AddMvc();
             services.AddTransient<IVehicleService, VehicleSevice>();
             services.AddTransient<IVehicleModelService, VehicleModelService>();

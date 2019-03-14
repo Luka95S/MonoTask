@@ -14,10 +14,15 @@ namespace Mono.DBContext
 
         public VehicleDBContext CreateDbContext(string[] args)
         {
-          
+
+            IConfigurationRoot configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json")
+                .Build();
+
             var builder = new DbContextOptionsBuilder<VehicleDBContext>();
 
-            var connectionString = @"Data Source=DESKTOP-3D55173\SQLEXPRESS;Initial Catalog=MonoDataBase;Integrated Security=True";
+            var connectionString = configuration.GetConnectionString("ConnectionString");
 
             builder.UseSqlServer(connectionString, o => o.MigrationsHistoryTable(VehicleDBContext.MIGRATION_HISTORY, VehicleDBContext.SCHEMA));
             return new VehicleDBContext(builder.Options);

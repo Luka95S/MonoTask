@@ -46,12 +46,5 @@ namespace Mono.VehicleRepository
         {
             return await genericRepository.Update<IVehicleModel>(mapper.Map<VehicleModel>(vehicleModel));
         }
-
-        //public async Task<IEnumerable<IVehicleModel>> GetVehicleModelsWithArgumentAsync(int page , int numberOfItems,string orderBy)
-        //{
-        //    genericRepository.GetWhereQuery<IVehicleModel>().Skip(page).Take(numberOfItems).OrderBy(x => x.Name == orderBy);
-        //}
-        //napravi jos update metodu i napravi get samo single objekta - pitanje: metoda za dohvaćanje po određenom 
-        // argumentu GetWhere -> kako ju napisati i njezin tok kako ide 
     }
 }

@@ -19,11 +19,11 @@ namespace Mono.MVC
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .ConfigureAppConfiguration((HostingContext,config) => {
+                .ConfigureAppConfiguration((HostingContext, config) =>
+                {
                     config.SetBasePath(Directory.GetCurrentDirectory());
                     config.AddJsonFile($"appsettings.json", optional: false, reloadOnChange: true);
                 })
-                .UseStartup<Startup>()
-                .Build();
+                .UseStartup<Startup>().Build();
     }
 }

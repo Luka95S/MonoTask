@@ -5,8 +5,6 @@ VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Models", "Mono.Models\Mono.Models.csproj", "{9B65B922-95C5-421F-AC26-8B9256D6E46F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.DAL", "Mono.DAL\Mono.DAL.csproj", "{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.VehicleRepository", "Mono.VehicleRepository\Mono.VehicleRepository.csproj", "{5FA81393-AB16-431A-A940-E51D132E1CE5}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.DBContext", "Mono.DBContext\Mono.DBContext.csproj", "{249FAF10-42B0-4D85-A2C6-4F6FCFFE29C7}"
@@ -15,11 +13,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Models.Common", "Mono.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.VehicleRepository.Common", "Mono.VehicleRepository.Common\Mono.VehicleRepository.Common.csproj", "{ACC600C3-416A-4571-96CB-84010BB727BE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.MVC", "Mono.MVC\Mono.MVC.csproj", "{E9F3B97B-8C36-4ED8-A294-7D124F4FC310}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.MVC", "Mono.MVC\Mono.MVC.csproj", "{E9F3B97B-8C36-4ED8-A294-7D124F4FC310}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Services", "Mono.Services\Mono.Services.csproj", "{B050DE58-E3EE-4CDD-BDBB-EA6988225437}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Services", "Mono.Services\Mono.Services.csproj", "{B050DE58-E3EE-4CDD-BDBB-EA6988225437}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mono.Services.Common", "Mono.Services.Common\Mono.Services.Common.csproj", "{50FE1D56-D8C5-4431-A6F7-D3A37565EEB1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mono.Services.Common", "Mono.Services.Common\Mono.Services.Common.csproj", "{50FE1D56-D8C5-4431-A6F7-D3A37565EEB1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -49,22 +47,6 @@ Global
 		{9B65B922-95C5-421F-AC26-8B9256D6E46F}.Release|x64.Build.0 = Release|Any CPU
 		{9B65B922-95C5-421F-AC26-8B9256D6E46F}.Release|x86.ActiveCfg = Release|Any CPU
 		{9B65B922-95C5-421F-AC26-8B9256D6E46F}.Release|x86.Build.0 = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|ARM.ActiveCfg = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|ARM.Build.0 = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|x64.Build.0 = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Debug|x86.Build.0 = Debug|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|ARM.ActiveCfg = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|ARM.Build.0 = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|x64.ActiveCfg = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|x64.Build.0 = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|x86.ActiveCfg = Release|Any CPU
-		{0D0510F4-5107-4FDF-8F7E-997529BCC4C0}.Release|x86.Build.0 = Release|Any CPU
 		{5FA81393-AB16-431A-A940-E51D132E1CE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5FA81393-AB16-431A-A940-E51D132E1CE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5FA81393-AB16-431A-A940-E51D132E1CE5}.Debug|ARM.ActiveCfg = Debug|Any CPU
