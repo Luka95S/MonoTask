@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mono.DAL\Mono.DAL.csproj" />
     <ProjectReference Include="..\Mono.Models.Common\Mono.Models.Common.csproj" />
   </ItemGroup>
 
