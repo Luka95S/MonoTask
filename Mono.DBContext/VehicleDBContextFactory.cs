@@ -7,11 +7,18 @@ using System.IO;
 using System.Text;
 
 
-namespace Mono.DBContext
+namespace Mono.DAL
 {
+    /// <summary>
+    /// Public class that inherits IDesignTimeDbContextFactory from EntityFrameworkCore.Design and takes as type VehicleDBContext class
+    /// </summary>
     public class VehicleDBContextFactory : IDesignTimeDbContextFactory<VehicleDBContext>
     {
-
+        /// <summary>
+        /// Metod that takes string series as parameter and return instance of DbContext
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns></returns>
         public VehicleDBContext CreateDbContext(string[] args)
         {
 
@@ -22,7 +29,7 @@ namespace Mono.DBContext
 
             var builder = new DbContextOptionsBuilder<VehicleDBContext>();
 
-            var connectionString = configuration.GetConnectionString("ConnectionString");
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             builder.UseSqlServer(connectionString, o => o.MigrationsHistoryTable(VehicleDBContext.MIGRATION_HISTORY, VehicleDBContext.SCHEMA));
             return new VehicleDBContext(builder.Options);

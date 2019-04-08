@@ -1,25 +1,56 @@
-﻿@model IEnumerable<Mono.MVC.Models.VehicleModelViewModel>
+﻿@model Mono.MVC.Models.VehicleModelViewModel
 @{
     ViewData["Title"] = "VehiclesModel";
 }
+
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
+
 <h2>Vehicles Model</h2>
 <a class="btn theme-payment-page-signin-btn btn-primary" href="@Url.RouteUrl("add-vehicle-model")">Add Vehicle Model</a>
 <hr />
+<form action="" method="get">
+    Filter:<input type="text" name="searchBy" />
+    <input type="submit" value="Search">
+</form>
+
 @ViewBag.Message
 <table style="width:100%">
     <tr>
         <th>Vehicle Make</th>
-        <th>Name</th>
-        <th>Abrv</th>
+        <th>Name<i id="name-arrow" class="fas fa-angle-down"></i></th>
+        <th>Abrv<i id="abrv-arrow" class="fas fa-angle-down"></i></th>
     </tr>
-    @foreach (var vehicleModel in Model)
+    @if (Model.AllVehicleModels != null)
     {
-    <tr>
-        <td>@vehicleModel.VehicleName</td>
-        <td>@vehicleModel.Name</td>
-        <td>@vehicleModel.Abrv</td>
-        <td><a href="@Url.RouteUrl("edit-vehicle-model", new {id = vehicleModel.Id })">Edit</a></td>
-        <td><a href="@Url.RouteUrl("delete-vehicle-model", new { id = vehicleModel.Id })">Delete</a></td>
-    </tr>
+        @foreach (var vehicleModel in Model.AllVehicleModels)
+        {
+            <tr>
+                <td>@vehicleModel.VehicleMakes?.Name</td>
+                <td>@vehicleModel?.Name</td>
+                <td>@vehicleModel?.Abrv</td>
+                <td><a href="@Url.RouteUrl("edit-vehicle-model", new {id = vehicleModel.Id })">Edit</a></td>
+                <td><a href="@Url.RouteUrl("delete-vehicle-model", new { id = vehicleModel.Id })">Delete</a></td>
+            </tr>
+        }
     }
 </table>
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item"><button class="page-link" id="paging-element-previous" disabled=@(!Model.Previous)>Previous</button></li>
+        <li class="page-item"><button class="page-link" id="paging-element-next" disabled=@(!Model.Next)>Next</button></li>
+    </ul>
+</nav>
+@section scripts{
+    <script type="text/javascript" src="~/js/Increment.js"></script>
+    <script type="text/javascript">
+        window.onload = setArrow();
+    </script>
+}

@@ -4,9 +4,10 @@
 }
 
 <h2>Edit</h2>
-
+@ViewBag.Message
 <form asp-route="edit-post-vehicles" method="post" class="container">
     <input class="form-control" type="text" name="name" placeholder="" value="@Model.Name" required />
     <input class="form-control" type="text" name="abrv" placeholder="" value="@Model.Abrv" required />
     <button type="submit" class="btn _tt-uc btn-primary btn-lg btn-block">Edit</button>
 </form>
+

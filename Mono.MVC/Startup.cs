@@ -9,10 +9,11 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Mono.DBContext;
+using Mono.DAL;
 using Mono.Services;
 using Mono.Services.Common;
 using Mono.VehicleRepository.Common;
+using Mono.Common;
 
 namespace Mono.MVC
 {
@@ -32,7 +33,7 @@ namespace Mono.MVC
             services.AddDbContext<VehicleDBContext>
                 (options => options.UseSqlServer(connection.ConnectionString));
             services.AddMvc();
-            services.AddTransient<IVehicleService, VehicleSevice>();
+            services.AddTransient<IVehicleService, VehicleService>();
             services.AddTransient<IVehicleModelService, VehicleModelService>();
             services.AddTransient<IVehicleModelRepository, Mono.VehicleRepository.VehicleModelRepository>();
             services.AddTransient<IVehicleRepository, Mono.VehicleRepository.VehicleRepository>();
@@ -58,7 +59,7 @@ namespace Mono.MVC
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "default",
+                    name: "home",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
         }

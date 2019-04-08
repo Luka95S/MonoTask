@@ -1,8 +1,65 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model Mono.MVC.Models.AllVehiclesViewModel
+@{
+    ViewData["Title"] = "Moja aplikacija";
+
 }
 
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.1/css/all.css"
+          integrity="sha384-50oBUHEmvpQ+1lW4y57PTFmhCaXp0ML5d60M1M7uH2+nqUivzIebhndOJK28anvf"
+          crossorigin="anonymous">
 
-<a href="@Url.RouteUrl("get-vehicles")">Vehicles</a>
-<a href="@Url.RouteUrl("get-vehicles-model")">Vehicles Model</a>
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
 
+@ViewBag.Message
+<form action="" method="get">
+    Filter:<input type="text" name="searchBy" />
+    <input type="submit" value="Search">
+</form>
+<table style="width:100%">
+    <tr>
+        <th>Make Name<i id="abrv-arrow" class="fas fa-angle-down"></i></th>
+        <th>Model Name</th>
+        <th>Model Abrv</th>
+    </tr>
+    @if(Model.AllVehicles != null)
+    {
+        @foreach (var vehicle in Model.AllVehicles)
+        {
+            <tr>
+                <td>@vehicle.Name</td>
+                <td>
+                    @foreach (var vehicleModel in vehicle.VehicleModels)
+                    {
+
+                        @vehicleModel?.Name <br />
+
+                    }
+                </td>
+                <td>
+                    @foreach (var vehicleModel in vehicle.VehicleModels)
+                    {
+                        @vehicleModel?.Abrv <br />
+                    }
+                </td>
+            </tr>
+        }
+    }
+
+</table>
+
+<nav aria-label="Page navigation">
+    <ul class="pagination">
+        <li class="page-item"><button class="page-link" id="paging-element-previous" disabled=@(!Model.Previous)>Previous</button></li>
+        <li class="page-item"><button class="page-link" id="paging-element-next" disabled=@(!Model.Next)>Next</button></li>
+    </ul>
+</nav>
+@section scripts{
+    <script type="text/javascript" src="~/js/Increment.js"></script>
+    <script type="text/javascript">
+        window.onload = setArrow();
+    </script>
+}

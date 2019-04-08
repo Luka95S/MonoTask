@@ -2,11 +2,31 @@
 @{
     ViewData["Title"] = "EditVehicleModel";
 }
+<head>
+    <link rel="stylesheet" href="http://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+</head>
 
 <h2>EditVehicleModel</h2>
 
-<form asp-route="edit-post-vehicles" method="post" class="container">
-    <input class="form-control" type="text" name="name" placeholder="" value="@Model.Name" required />
-    <input class="form-control" type="text" name="abrv" placeholder="" value="@Model.Abrv" required />
+<form asp-route="edit-vehicle-model-post" method="post" class="container">
+    <input name="id" value="@Model.Id" hidden>
+    <label>Vehicle Make</label>
+    <input class="form-control" id="vehiclemake" type="text" name="vehiclename" value="@Model.VehicleMakes.Name" required />
+    <label>Vehicle Name</label>
+    <input class="form-control" type="text" name="name" value="@Model.Name" required />
+    <label>Vehicle Abrv</label>
+    <input class="form-control" type="text" name="abrv" value="@Model.Abrv" required />
     <button type="submit" class="btn _tt-uc btn-primary btn-lg btn-block">Edit</button>
 </form>
+
+
+@section scripts{
+    <script type="text/javascript" src="~/js/VehicleMakeDropdown.js"></script>
+    <script type="text/javascript">
+        window.onload = vehicleDropdown('@Url.RouteUrl("get-vehicles-by-query")');
+    </script>
+}

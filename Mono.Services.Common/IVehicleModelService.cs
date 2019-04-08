@@ -1,4 +1,6 @@
-﻿using Mono.Models.Common;
+﻿using Mono.Common;
+using Mono.Models;
+using Mono.Models.Common;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,10 +10,46 @@ namespace Mono.Services.Common
 {
     public interface IVehicleModelService
     {
-        Task<IEnumerable<IVehicleModel>> GetAllVehiclesAsync();
-        Task<IVehicleModel> GetVehicleModelAsync(Guid id);
+        /// <summary>
+        /// Gets all VehicleModels that match to filter model
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        IEnumerable<IVehicleModel> GetAllVehicles(IFilter filter);
+
+        /// <summary>
+        /// Gets VehicleModel by identifier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        IVehicleModel GetVehicleModel(Guid id);
+
+        /// <summary>
+        /// Adds VehicleModel to database
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <returns></returns>
         Task<int> AddVehiclesModelAsync(IVehicleModel vehicle);
+
+        /// <summary>
+        /// Removes VehicleModel by identifier
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         Task<int> RemoveVehicleModelAsync(Guid id);
-        Task<int> UpdateVehicleModelAsync(IVehicleModel vehicle, Guid id);
+
+        /// <summary>
+        /// Updates VehicleModel
+        /// </summary>
+        /// <param name="vehicle"></param>
+        /// <returns></returns>
+        Task<int> UpdateVehicleModelAsync(IVehicleModel vehicle);
+
+        /// <summary>
+        /// Gets VehicleModel count that match searchby
+        /// </summary>
+        /// <param name="searchby"></param>
+        /// <returns></returns>
+        int GetVehicleModelCount(string searchby);
     }
 }

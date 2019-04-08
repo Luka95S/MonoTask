@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Mono.DAL.DatabaseModels;
 using Mono.Models;
 using Mono.Models.Common;
 using Mono.MVC.Models;
@@ -13,17 +14,28 @@ namespace Mono.MVC.Mapper
     {
         public MapperConfiguration()
         {
+            #region DataBase Objects
+            CreateMap<VehicleModelModel, VehicleModel>().ReverseMap();
+            CreateMap<VehicleMakeModel, VehicleMake>().ReverseMap();
+            CreateMap<IVehicleModel, VehicleModelModel>().ReverseMap();
+            CreateMap<IVehicleMake, VehicleMakeModel>().ReverseMap();
+            #endregion
+            #region Data Transfer Objects
             CreateMap<IVehicleMake, VehicleMake>().ReverseMap();
-            CreateMap<IVehicleMake, VehicleModel>().ReverseMap();
+            CreateMap<IVehicleModel, VehicleModel>().ReverseMap();
+            #endregion
+            #region Data View Objects
+            CreateMap<IVehicleMake, AllVehiclesViewModel>()
+                .ForMember(d => d.AllVehicles, o => o.MapFrom(s => s.VehicleModels))
+                .ReverseMap();
             CreateMap<IVehicleModel, VehicleModelViewModel>()
                 .ForMember(d => d.VehicleName, o => o.Ignore());
             CreateMap<VehicleModelViewModel, IVehicleModel>();
-
             CreateMap<VehicleMakeViewModel, IVehicleMake>()
-               // .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))
                 .ForMember(d => d.Abrv, o => o.MapFrom(s => s.Abrv))
                 .ReverseMap();
+            #endregion
         }
     }
 }

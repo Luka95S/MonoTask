@@ -1,9 +1,9 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Mono.DBContext.Migrations
+namespace Mono.DAL.Migrations
 {
-    public partial class initalMigration : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,24 +30,38 @@ namespace Mono.DBContext.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    MakeId = table.Column<Guid>(nullable: false),
+                    VehicleMakeId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Abrv = table.Column<string>(nullable: true)
+                    Abrv = table.Column<string>(nullable: true),
+                    VehicleMakesId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vehicles", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vehicles_VehicleMakes_VehicleMakesId",
+                        column: x => x.VehicleMakesId,
+                        principalSchema: "Mono",
+                        principalTable: "VehicleMakes",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vehicles_VehicleMakesId",
+                schema: "Mono",
+                table: "Vehicles",
+                column: "VehicleMakesId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "VehicleMakes",
+                name: "Vehicles",
                 schema: "Mono");
 
             migrationBuilder.DropTable(
-                name: "Vehicles",
+                name: "VehicleMakes",
                 schema: "Mono");
         }
     }

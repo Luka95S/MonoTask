@@ -4,9 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using Mono.DBContext;
+using Mono.DAL;
 
-namespace Mono.DBContext.Migrations
+namespace Mono.DAL.Migrations
 {
     [DbContext(typeof(VehicleDBContext))]
     partial class VehicleDBContextModelSnapshot : ModelSnapshot
@@ -20,7 +20,7 @@ namespace Mono.DBContext.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Mono.Models.VehicleMake", b =>
+            modelBuilder.Entity("Mono.DAL.DatabaseModels.VehicleMakeModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
@@ -34,20 +34,29 @@ namespace Mono.DBContext.Migrations
                     b.ToTable("VehicleMakes");
                 });
 
-            modelBuilder.Entity("Mono.Models.VehicleModel", b =>
+            modelBuilder.Entity("Mono.DAL.DatabaseModels.VehicleModelModel", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd();
 
                     b.Property<string>("Abrv");
 
-                    b.Property<Guid>("MakeId");
-
                     b.Property<string>("Name");
+
+                    b.Property<Guid?>("VehicleMakesId");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("VehicleMakesId");
+
                     b.ToTable("Vehicles");
+                });
+
+            modelBuilder.Entity("Mono.DAL.DatabaseModels.VehicleModelModel", b =>
+                {
+                    b.HasOne("Mono.DAL.DatabaseModels.VehicleMakeModel", "VehicleMakes")
+                        .WithMany("VehicleModels")
+                        .HasForeignKey("VehicleMakesId");
                 });
 #pragma warning restore 612, 618
         }
