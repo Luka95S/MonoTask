@@ -9,7 +9,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mono.DBContext\Mono.DAL.csproj" />
     <ProjectReference Include="..\Mono.Models\Mono.Models.csproj" />
     <ProjectReference Include="..\Mono.VehicleRepository.Common\Mono.VehicleRepository.Common.csproj" />
   </ItemGroup>

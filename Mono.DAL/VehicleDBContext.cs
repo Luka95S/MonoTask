@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Mono.Models;
-using Microsoft.EntityFrameworkCore;
 using Mono.DAL.DatabaseModels;
+using Microsoft.EntityFrameworkCore;
 
 namespace Mono.DAL
 {
