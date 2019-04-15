@@ -44,7 +44,7 @@ namespace Mono.VehicleRepository
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleModel> GetVehiclesModel(IFilter filter)
+        public IEnumerable<IVehicleModel> GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort)
         {
             if (filter.SearchBy != null)
             {
@@ -53,20 +53,20 @@ namespace Mono.VehicleRepository
                 {
                     return null;
                 }
-                switch (filter.SortBy)
+                switch (sort.SortBy)
                 {
                     //name, abrv
                     // sort by Abrv and asc or desc(depend of SortOrder value)
                     case "abrv":  
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
                         break;
                     // sort by Name and asc or desc(depend of SortOrder value)
                     case "name":  
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
                         break;
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
-                vehicles = vehicles.Skip(filter.Skip).Take(filter.NumberOfItems);
+                vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
                 return mapper.Map<IEnumerable<IVehicleModel>>(vehicles);
             }
             else
@@ -77,20 +77,20 @@ namespace Mono.VehicleRepository
                 {
                     return null;
                 }
-                switch (filter.SortBy)
+                switch (sort.SortBy)
                 {
                     //name, abrv
                     // sort by Abrv and asc or desc(depend of SortOrder value)
                     case "abrv":  
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
                         break;
                     // sort by Name and asc or desc(depend of SortOrder value)
                     case "name": 
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
                         break;
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
-                vehicles = vehicles.Skip(filter.Skip).Take(filter.NumberOfItems);
+                vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
                 return mapper.Map<IEnumerable<IVehicleModel>>(vehicles);
             }
 

@@ -29,9 +29,9 @@ namespace Mono.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter)
+        public IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort)
         {
-            return vehicleRepository.GetVehicles(filter);
+            return vehicleRepository.GetVehicles(filter, paging, sort);
         }
 
         /// <summary>

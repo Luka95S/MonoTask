@@ -45,19 +45,28 @@ namespace Mono.MVC.Controllers
         [HttpGet("", Name = "index")]
         public IActionResult Index([FromQuery(Name = "message")] string message, [FromQuery(Name = "page")]int page = 1, [FromQuery(Name = "sortOrder")] string sortOrder = "asc", [FromQuery(Name = "sortBy")] string sortBy = "name", [FromQuery(Name="searchby")] string searchBy ="")
         {
+            // add filter, page, sort model, viewbag next and previous
             var filter = new Filter();
-            filter.Page = page;
-            filter.SortOrder = sortOrder;
-            filter.SortBy = sortBy;
+            var sort = new Sorting();
+            var paging = new Paging();
+            paging.Page = page;
+            sort.SortOrder = sortOrder;
+            sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
-            var viewModel = new AllVehiclesViewModel();
-            viewModel.AllVehicles = mapper.Map<IEnumerable<VehicleMake>>(vehicleService.GetAllVehicles(filter));
+            // viewModel ----- ----- ---- --- ----
+            var viewModel = new AllVehiclesViewModel(); //napraviti izmjenu u VehicleMakeViewModelu i onda s njim tu raditi
+            viewModel.AllVehicles = mapper.Map<IEnumerable<VehicleMake>>(vehicleService.GetAllVehicles(filter, paging, sort));
+
+            var totalItemsCount = vehicleService.GetVehicleCount(filter.SearchBy);
+            ViewBag.Previous = paging.Skip == 0 ? false : true;
+            ViewBag.Next = totalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
+
             if (viewModel.AllVehicles != null)
             {
-                viewModel.TotalPageCount = vehicleService.GetVehicleCount(filter.SearchBy);
-                viewModel.Previous = filter.Skip == 0 ? false : true;
-                viewModel.Next = viewModel.TotalPageCount - filter.Skip - filter.NumberOfItems <= 0 ? false : true;
+                //viewModel.TotalPageCount = vehicleService.GetVehicleCount(filter.SearchBy);
+                //viewModel.Previous = filter.Skip == 0 ? false : true;
+                //viewModel.Next = viewModel.TotalPageCount - filter.Skip - filter.NumberOfItems <= 0 ? false : true;
                 ViewBag.Message = viewModel.AllVehicles.Count() == 0 ? "No search items found! Try again" : message;
                 return View(viewModel);
             }

@@ -13,7 +13,7 @@ namespace Mono.Services.Common
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter);
+        IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort);
 
         /// <summary>
         /// Gets VehicleMake by query
