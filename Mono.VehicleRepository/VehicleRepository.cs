@@ -48,7 +48,7 @@ namespace Mono.VehicleRepository
         {
             if (filter.SearchBy != null)
             {
-                var vehicles = genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(filter.SearchBy) == true).Include("VehicleModels"); //list async testirati
+                var vehicles = genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(filter.SearchBy) == true).Include("VehicleModels");
                 if (vehicles == null)
                 {
                     return null;
