@@ -36,6 +36,11 @@ namespace Mono.Models
         /// Gets or sets list of VehicleModels 
         /// </summary>
         public IEnumerable<IVehicleModel> VehicleModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets total number of items
+        /// </summary>
+        public int TotalItemsCount { get; set; }
     }
 
 

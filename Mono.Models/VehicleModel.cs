@@ -40,5 +40,13 @@ namespace Mono.Models
         /// Gets or sets VehicleMakes value of type IVehicleMake  
         /// </summary>
         public IVehicleMake VehicleMakes { get; set; }
+
+        //kolekcija vehicleModela kao properti
+        public IEnumerable<IVehicleModel> VehicleModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets total number of items
+        /// </summary>
+        public int TotalItemsCount { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace Mono.VehicleRepository.Common
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IEnumerable<IVehicleModel> GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort);
+        IVehicleModel GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
 
         /// <summary>
         /// Gets VehicleModel with id match of passed id

@@ -15,7 +15,7 @@ namespace Mono.Services.Common
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IEnumerable<IVehicleModel> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort);
+        IVehicleModel GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
 
         /// <summary>
         /// Gets VehicleModel by identifier

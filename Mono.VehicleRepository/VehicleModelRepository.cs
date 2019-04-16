@@ -11,6 +11,7 @@ using Mono.VehicleRepository.Common;
 using Microsoft.EntityFrameworkCore;
 using Mono.DAL.DatabaseModels;
 using Mono.Common;
+using System.Collections;
 
 namespace Mono.VehicleRepository
 {
@@ -44,11 +45,14 @@ namespace Mono.VehicleRepository
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleModel> GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort)
+        public IVehicleModel GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
             if (filter.SearchBy != null)
             {
+                //
+                //var embedIt = embed.Embed.Contains("VehicleMakes") ? "VehicleMakes" : "";
                 var vehicles = genericRepository.GetWhereQuery<VehicleModelModel>().Where(x => x.VehicleMakes.Name.StartsWith(filter.SearchBy) == true).Include("VehicleMakes").AsNoTracking();
+                var count = vehicles.Count();
                 if (vehicles == null)
                 {
                     return null;
@@ -67,11 +71,18 @@ namespace Mono.VehicleRepository
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
                 vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
-                return mapper.Map<IEnumerable<IVehicleModel>>(vehicles);
+
+                var response = new VehicleModel
+                {
+                    VehicleModels = mapper.Map<IEnumerable<IVehicleModel>>(vehicles),
+                    TotalItemsCount = count
+                };
+                return response;
             }
             else
             {
                 var vehicles = genericRepository.GetWhereQuery<VehicleModelModel>().Include("VehicleMakes").AsNoTracking();
+                var count = vehicles.Count();
 
                 if (vehicles == null)
                 {
@@ -91,7 +102,12 @@ namespace Mono.VehicleRepository
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
                 vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
-                return mapper.Map<IEnumerable<IVehicleModel>>(vehicles);
+                var response = new VehicleModel
+                {
+                    VehicleModels = mapper.Map<IEnumerable<VehicleModel>>(vehicles),
+                    TotalItemsCount = count
+                };
+                return response;
             }
 
 

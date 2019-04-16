@@ -31,9 +31,9 @@ namespace Mono.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleModel> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort)
+        public IVehicleModel GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
-            return vehicleModelRepository.GetVehiclesModel(filter, paging, sort);
+            return vehicleModelRepository.GetVehiclesModel(filter, paging, sort, embed);
         }
 
         /// <summary>

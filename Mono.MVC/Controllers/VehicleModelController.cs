@@ -59,16 +59,20 @@ namespace Mono.MVC.Controllers
             var filter = new Filter();
             var sort = new Sorting();
             var paging = new Paging();
+            var embed = new EmbedCollection();
             paging.Page = page;
             sort.SortOrder = sortOrder;
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
             var viewModel = new VehicleModelViewModel();
-            viewModel.AllVehicleModels = mapper.Map<IEnumerable<VehicleModel>>(vehicleModelService.GetAllVehicles(filter, paging, sort));
-            var totalItemsCount = vehicleService.GetVehicleCount(filter.SearchBy);
+            //embed.Embed.Add("VehicleMakes");
+            IVehicleModel vehicles = mapper.Map<VehicleModel>(vehicleModelService.GetAllVehicles(filter, paging, sort, embed));
+        
+            viewModel.AllVehicleModels = mapper.Map<IEnumerable<VehicleModel> >(vehicles.VehicleModels);
+            //var totalItemsCount = vehicleService.GetVehicleCount(filter.SearchBy);
             ViewBag.Previous = paging.Skip == 0 ? false : true;
-            ViewBag.Next = totalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
+            ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
 
 
             if (viewModel.AllVehicleModels != null)
