@@ -54,24 +54,22 @@ namespace Mono.MVC.Controllers
             var filter = new Filter();
             var sort = new Sorting();
             var paging = new Paging();
+            var embed = new EmbedCollection("VehicleModels");
             paging.Page = page;
             sort.SortOrder = sortOrder;
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
             var viewModel = new VehicleMakeViewModel();
-            viewModel.AllVehicleMakes = mapper.Map<IEnumerable<VehicleMake>>(vehicleService.GetAllVehicles(filter, paging, sort));
+            IVehicleMake vehicles = mapper.Map<VehicleMake>(vehicleService.GetAllVehicles(filter, paging, sort, embed).Result);
+            viewModel.AllVehicleMakes = mapper.Map<IEnumerable<VehicleMake>>(vehicles.VehicleMakes);
 
-            var totalItemsCount = vehicleService.GetVehicleCount(filter.SearchBy);
             ViewBag.Previous = paging.Skip == 0 ? false : true;
-            ViewBag.Next = totalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
+            ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
 
             if (viewModel.AllVehicleMakes != null)
             {
-                //viewModel.TotalPageCount = vehicleService.GetVehicleCount(filter.SearchBy);
-                //viewModel.Previous = filter.Skip == 0 ? false : true;
-                //viewModel.Next = viewModel.TotalPageCount - filter.Skip - filter.NumberOfItems <= 0 || viewModel.AllVehicleMakes.Count() - filter.NumberOfItems < 0 ? false : true;
-                ViewBag.Message = viewModel.AllVehicleMakes.Count() == 0 ? "No search items found! Try again" : message;
+                ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
                 return View(viewModel);
             }
             ViewBag.Message = "There are no VehicleMake models in database. Add them!";

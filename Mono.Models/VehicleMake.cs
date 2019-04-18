@@ -38,6 +38,11 @@ namespace Mono.Models
         public IEnumerable<IVehicleModel> VehicleModels { get; set; }
 
         /// <summary>
+        /// Gets or sets VehicleMakes
+        /// </summary>
+        public IEnumerable<IVehicleMake> VehicleMakes { get; set; }
+
+        /// <summary>
         /// Gets or sets total number of items
         /// </summary>
         public int TotalItemsCount { get; set; }

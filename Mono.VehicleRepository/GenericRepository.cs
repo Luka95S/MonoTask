@@ -77,8 +77,8 @@ namespace Mono.VehicleRepository
         /// <returns></returns>
         public IQueryable<T> GetWhereQuery<T>() where T : class
         {
-            return context.Set<T>(); 
-        }    
+            return context.Set<T>();
+        }
 
         /// <summary>
         /// Async Task GetAll method of open class type (T).

@@ -17,21 +17,14 @@ namespace Mono.VehicleRepository.Common
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IVehicleModel GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
+        Task<IVehicleModel> GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
 
         /// <summary>
         /// Gets VehicleModel with id match of passed id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IVehicleModel GetVehicleModel(Guid id);
-
-        /// <summary>
-        /// Gets VehicleModel count by search
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns>Integer- number of items</returns>
-        int GetVehicleModelCount(string searchby);
+        Task<IVehicleModel> GetVehicleModel(Guid id);
 
         /// <summary>
         /// Adds VehicleModel

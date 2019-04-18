@@ -31,7 +31,7 @@ namespace Mono.Services
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IVehicleModel GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
+        public Task<IVehicleModel> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
             return vehicleModelRepository.GetVehiclesModel(filter, paging, sort, embed);
         }
@@ -41,7 +41,7 @@ namespace Mono.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IVehicleModel GetVehicleModel(Guid id)
+        public Task<IVehicleModel> GetVehicleModel(Guid id)
         {
             return vehicleModelRepository.GetVehicleModel(id);
         }
@@ -74,16 +74,6 @@ namespace Mono.Services
         public async Task<int> UpdateVehicleModelAsync(IVehicleModel vehicle)
         {
             return await vehicleModelRepository.UpdateVehicleModelFromSelectionAsync(vehicle);
-        }
-
-        /// <summary>
-        /// Gets VehicleModel count that match searchby
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns></returns>
-        public int GetVehicleModelCount(string searchby)
-        {
-            return vehicleModelRepository.GetVehicleModelCount(searchby);
         }
     }
 }

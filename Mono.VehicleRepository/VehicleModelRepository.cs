@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Mono.DAL.DatabaseModels;
 using Mono.Common;
 using System.Collections;
+using System.Reflection;
 
 namespace Mono.VehicleRepository
 {
@@ -45,13 +46,11 @@ namespace Mono.VehicleRepository
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IVehicleModel GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
+        public Task<IVehicleModel> GetVehiclesModel(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
             if (filter.SearchBy != null)
             {
-                //
-                //var embedIt = embed.Embed.Contains("VehicleMakes") ? "VehicleMakes" : "";
-                var vehicles = genericRepository.GetWhereQuery<VehicleModelModel>().Where(x => x.VehicleMakes.Name.StartsWith(filter.SearchBy) == true).Include("VehicleMakes").AsNoTracking();
+                var vehicles = embed.Embed != null ? genericRepository.GetWhereQuery<VehicleModelModel>().Where(x => x.VehicleMakes.Name.StartsWith(filter.SearchBy) == true).Include(embed.Embed).AsNoTracking() : genericRepository.GetWhereQuery<VehicleModelModel>().Where(x => x.VehicleMakes.Name.StartsWith(filter.SearchBy) == true).AsNoTracking();
                 var count = vehicles.Count();
                 if (vehicles == null)
                 {
@@ -77,11 +76,11 @@ namespace Mono.VehicleRepository
                     VehicleModels = mapper.Map<IEnumerable<IVehicleModel>>(vehicles),
                     TotalItemsCount = count
                 };
-                return response;
+                return Task.FromResult(mapper.Map<IVehicleModel>(response));
             }
             else
             {
-                var vehicles = genericRepository.GetWhereQuery<VehicleModelModel>().Include("VehicleMakes").AsNoTracking();
+                var vehicles = embed.Embed != null ? genericRepository.GetWhereQuery<VehicleModelModel>().Include(embed.Embed).AsNoTracking() : genericRepository.GetWhereQuery<VehicleModelModel>().AsNoTracking();
                 var count = vehicles.Count();
 
                 if (vehicles == null)
@@ -107,7 +106,7 @@ namespace Mono.VehicleRepository
                     VehicleModels = mapper.Map<IEnumerable<VehicleModel>>(vehicles),
                     TotalItemsCount = count
                 };
-                return response;
+                return Task.FromResult(mapper.Map<IVehicleModel>(response)); ;
             }
 
 
@@ -119,10 +118,10 @@ namespace Mono.VehicleRepository
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        public IVehicleModel GetVehicleModel(Guid id)
+        public Task<IVehicleModel> GetVehicleModel(Guid id)
         {
 
-            return mapper.Map<IVehicleModel>(genericRepository.GetWhereQuery<VehicleModelModel>().Include("VehicleMakes").FirstOrDefault(v => v.Id == id));
+            return Task.FromResult(mapper.Map<IVehicleModel>(genericRepository.GetWhereQuery<VehicleModelModel>().Include("VehicleMakes").FirstOrDefault(v => v.Id == id)));
         }
 
         /// <summary>
@@ -154,18 +153,5 @@ namespace Mono.VehicleRepository
         {
             return await genericRepository.UpdateAsync(mapper.Map<VehicleModelModel>(vehicleModel));
         }
-
-        /// <summary>
-        /// Gets VehicleModel count by search
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns>Integer- number of items</returns>
-        public int GetVehicleModelCount(string searchby)
-        {
-            var vehicles = genericRepository.GetWhereQuery<VehicleModelModel>().Where(x => x.VehicleMakes.Name.StartsWith(searchby) == true);
-            return vehicles.Count();
-        }
-    }
-
-   
+    } 
 }

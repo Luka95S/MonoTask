@@ -23,7 +23,17 @@ namespace Mono.Models.Common
 
         /// <summary>
         /// Gets or sets list of VehicleModels 
-        /// </summary>
+        /// </summary>get;
         IEnumerable<IVehicleModel> VehicleModels { get; set; }
+
+        /// <summary>
+        /// Gets or sets VehicleMakes
+        /// </summary>
+        IEnumerable<IVehicleMake> VehicleMakes { get; set; }
+
+        /// <summary>
+        /// Gets or sets total number of items
+        /// </summary>
+        int TotalItemsCount { get; set; }
     }
 }

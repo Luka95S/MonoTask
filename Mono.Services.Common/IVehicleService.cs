@@ -9,32 +9,18 @@ namespace Mono.Services.Common
     public interface IVehicleService
     {
         /// <summary>
-        /// Gets all VehicleMake that match to filter model
+        /// Gets VehicleMakes that match to filter model
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort);
-
-        /// <summary>
-        /// Gets VehicleMake by query
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        IEnumerable<IVehicleMake> GetVehicleQuery(string query);
+        Task<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
 
         /// <summary>
         /// Gets VehicleMake identifier that match VehicleMake name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        IVehicleMake GetVehicleMakeByName(string name);
-
-        /// <summary>
-        /// Gets VehicleMake count that match searchby
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns></returns>
-        int GetVehicleCount(string searchby);
+        Task<IVehicleMake> GetVehicleMakeByName(string name);
 
         /// <summary>
         /// Gets VehicleMake by identifier

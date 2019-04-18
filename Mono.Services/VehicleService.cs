@@ -25,13 +25,13 @@ namespace Mono.Services
         }
 
         /// <summary>
-        /// Gets all VehicleMake that match to filter model
+        /// Gets VehicleMakes that match to filter model
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort)
+        public Task<IVehicleMake> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
-            return vehicleRepository.GetVehicles(filter, paging, sort);
+            return vehicleRepository.GetVehicles(filter, paging, sort, embed);
         }
 
         /// <summary>
@@ -85,33 +85,13 @@ namespace Mono.Services
         }
 
         /// <summary>
-        /// Gets VehicleMake by query
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public IEnumerable<IVehicleMake> GetVehicleQuery(string query)
-        {
-            return vehicleRepository.GetVehicleQuery(query);
-        }
-
-        /// <summary>
         /// Gets VehicleMake identifier that match VehicleMake name
         /// </summary>
         /// <param name="name"></param>
         /// <returns></returns>
-        public IVehicleMake GetVehicleMakeByName(string name)
+        public Task<IVehicleMake> GetVehicleMakeByName(string name)
         {
             return vehicleRepository.GetVehicleMakeByName(name);
-        }
-
-        /// <summary>
-        /// Gets VehicleMake count that match searchby
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns></returns>
-        public int GetVehicleCount(string searchby)
-        {
-            return vehicleRepository.GetVehiclesCount(searchby);
         }
     }   
 

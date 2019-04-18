@@ -4,6 +4,7 @@ namespace Mono.Common
 {
     public interface IEmbedCollection
     {
-        ICollection<string> Embed { get; set; }
+        ICollection<string> EmbedCollectionOfStrings { get; set; }
+        string Embed { get; set; }
     }
 }

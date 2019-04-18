@@ -10,7 +10,7 @@ namespace Mono.Common
         /// Gets or sets SortOrder value.
         /// It's used for passing parameter for sorting (ascending or descending)
         /// </summary>
-        public string SortOrder { get; set; }
+        public string SortOrder { get; set; } = "asc";
 
         /// <summary>
         /// Gets or sets SortBy value.

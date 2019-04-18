@@ -59,28 +59,20 @@ namespace Mono.MVC.Controllers
             var filter = new Filter();
             var sort = new Sorting();
             var paging = new Paging();
-            var embed = new EmbedCollection();
+            var embed = new EmbedCollection("VehicleMakes");
             paging.Page = page;
             sort.SortOrder = sortOrder;
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
             var viewModel = new VehicleModelViewModel();
-            //embed.Embed.Add("VehicleMakes");
-            IVehicleModel vehicles = mapper.Map<VehicleModel>(vehicleModelService.GetAllVehicles(filter, paging, sort, embed));
-        
-            viewModel.AllVehicleModels = mapper.Map<IEnumerable<VehicleModel> >(vehicles.VehicleModels);
-            //var totalItemsCount = vehicleService.GetVehicleCount(filter.SearchBy);
+            IVehicleModel vehicles = mapper.Map<VehicleModel>(vehicleModelService.GetAllVehicles(filter, paging, sort, embed).Result);
+            viewModel.AllVehicleModels = mapper.Map<IEnumerable<VehicleModel>>(vehicles.VehicleModels);
             ViewBag.Previous = paging.Skip == 0 ? false : true;
             ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
-
-
             if (viewModel.AllVehicleModels != null)
             {
-                //viewModel.TotalPageCount = vehicleModelService.GetVehicleModelCount(filter.SearchBy);
-                //viewModel.Previous = filter.Skip == 0 ? false : true;
-                //viewModel.Next = viewModel.TotalPageCount - filter.Skip - filter.NumberOfItems <= 0 ? false : true;
-                ViewBag.Message = viewModel.AllVehicleModels.Count() == 0 ? "No search items found! Try again" : message;
+                ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
                 return View(viewModel);
             }
             ViewBag.Message = "There are no VehicleModels in database. Add them!";
@@ -111,7 +103,7 @@ namespace Mono.MVC.Controllers
         public async Task<IActionResult> AddVehicleModel([FromForm]VehicleModelViewModel model)
         {
             model.Id = Guid.NewGuid();
-            var vehicleMake = mapper.Map<VehicleMake>(vehicleService.GetVehicleMakeByName(model.VehicleName));
+            var vehicleMake = mapper.Map<VehicleMake>(vehicleService.GetVehicleMakeByName(model.VehicleName).Result);
             if (vehicleMake != null)
             { 
                 try
@@ -141,7 +133,7 @@ namespace Mono.MVC.Controllers
         [HttpGet("vehicle-model/edit", Name = "edit-vehicle-model")]
         public IActionResult EditVehicleModel([FromQuery(Name = "id")]Guid id)
         {
-            var vehicleModel = vehicleModelService.GetVehicleModel(id);
+            var vehicleModel = vehicleModelService.GetVehicleModel(id).Result;
             return vehicleModel != null ? View(mapper.Map<VehicleModelViewModel>(vehicleModel)) : View();
         }
 
@@ -154,7 +146,7 @@ namespace Mono.MVC.Controllers
         [HttpPost("vehicle-model/edit", Name = "edit-vehicle-model-post")]
         public async Task<IActionResult> EditVehicleModel([FromForm]VehicleModelViewModel model)
         { 
-            var vehiclem = mapper.Map<VehicleMake>(vehicleService.GetVehicleMakeByName(model.VehicleName));
+            var vehiclem = mapper.Map<VehicleMake>(vehicleService.GetVehicleMakeByName(model.VehicleName).Result);
             model.VehicleMakes = vehiclem;
             var vehicle = mapper.Map<IVehicleModel>(model);
             var result = await vehicleModelService.UpdateVehicleModelAsync(vehicle);
@@ -198,8 +190,10 @@ namespace Mono.MVC.Controllers
         [HttpGet("vehicles/get-all-vehicles", Name = "get-vehicles-by-query")]
         public JsonResult GetAllVehicles(string query)
         {
-            var vehicle = vehicleService.GetVehicleQuery(query);
-            return vehicle != null ? Json(vehicle) : null;
+            var filter = new Filter();
+            filter.SearchBy = query;
+            var vehicles = vehicleService.GetAllVehicles(filter, null, null, null).Result;
+            return vehicles != null ? Json(vehicles.VehicleMakes) : null;
         }
     }
 }
