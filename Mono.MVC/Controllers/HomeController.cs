@@ -45,7 +45,6 @@ namespace Mono.MVC.Controllers
         [HttpGet("", Name = "index")]
         public IActionResult Index([FromQuery(Name = "message")] string message, [FromQuery(Name = "page")]int page = 1, [FromQuery(Name = "sortOrder")] string sortOrder = "asc", [FromQuery(Name = "sortBy")] string sortBy = "name", [FromQuery(Name="searchby")] string searchBy ="")
         {
-            // add filter, page, sort model, viewbag next and previous
             var filter = new Filter();
             var sort = new Sorting();
             var paging = new Paging();
@@ -55,19 +54,17 @@ namespace Mono.MVC.Controllers
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
-            var viewModel = new AllVehiclesViewModel(); //napraviti izmjenu u VehicleMakeViewModelu i onda s njim tu raditi
             IVehicleMake vehicles = mapper.Map<VehicleMake>(vehicleService.GetAllVehicles(filter, paging, sort, embed).Result);
-            viewModel.AllVehicles = mapper.Map<IEnumerable<VehicleMake>>(vehicles.VehicleMakes);
             ViewBag.Previous = paging.Skip == 0 ? false : true;
             ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
 
-            if (viewModel.AllVehicles != null)
+            if (vehicles.VehicleMakes != null)
             {
                 ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
-                return View(viewModel);
+                return View(mapper.Map<VehicleMakeViewModel>(vehicles));
             }
             ViewBag.Message = "There are no Vehicles in database. Add them!";
-            return View(viewModel); 
+            return View(mapper.Map<VehicleMakeViewModel>(vehicles));
         }
     }
 }

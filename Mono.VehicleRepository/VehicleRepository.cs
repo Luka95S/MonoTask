@@ -83,7 +83,7 @@ namespace Mono.VehicleRepository
             {
                 paging = paging == null ? new Paging() : paging;
                 sort = sort == null ? new Sorting() : sort;
-                var vehicles = embed.Embed != null ? genericRepository.GetWhereQuery<VehicleMakeModel>().Include(embed.Embed) : genericRepository.GetWhereQuery<VehicleMakeModel>();
+                var vehicles = embed?.Embed != null ? genericRepository.GetWhereQuery<VehicleMakeModel>().Include(embed.Embed) : genericRepository.GetWhereQuery<VehicleMakeModel>();
                 var count = vehicles.Count();
                 if (vehicles == null)
                 {

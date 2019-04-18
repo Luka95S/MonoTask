@@ -27,9 +27,9 @@
         <th>Name<i id="name-arrow" class="fas fa-angle-down"></i></th>
         <th>Abrv<i id="abrv-arrow" class="fas fa-angle-down"></i></th>
     </tr>
-    @if (Model.AllVehicleMakes != null)
+    @if (Model.VehicleMakes != null)
     {
-        @foreach (var vehicle in Model.AllVehicleMakes)
+        @foreach (var vehicle in Model.VehicleMakes)
         {
             <tr>
                 <td>@vehicle?.Name</td>

@@ -60,20 +60,18 @@ namespace Mono.MVC.Controllers
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
-            var viewModel = new VehicleMakeViewModel();
             IVehicleMake vehicles = mapper.Map<VehicleMake>(vehicleService.GetAllVehicles(filter, paging, sort, embed).Result);
-            viewModel.AllVehicleMakes = mapper.Map<IEnumerable<VehicleMake>>(vehicles.VehicleMakes);
 
             ViewBag.Previous = paging.Skip == 0 ? false : true;
             ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
 
-            if (viewModel.AllVehicleMakes != null)
+            if (vehicles.VehicleMakes != null)
             {
                 ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
-                return View(viewModel);
+                return View(mapper.Map<VehicleMakeViewModel>(vehicles));
             }
             ViewBag.Message = "There are no VehicleMake models in database. Add them!";
-            return View(viewModel);
+            return View(mapper.Map<VehicleMakeViewModel>(vehicles));
         }
 
         /// <summary>
@@ -98,7 +96,7 @@ namespace Mono.MVC.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (vehicleService.GetVehicleMakeByName(model.Name) == null)
+                if (vehicleService.GetVehicleMakeByName(model.Name).Result == null)
                 {
                     model.Id = Guid.NewGuid();
                     await vehicleService.AddVehiclesAsync(mapper.Map<IVehicleMake>(model));

@@ -35,5 +35,6 @@ namespace Mono.Models.Common
         /// Gets or sets total number of items
         /// </summary>
         int TotalItemsCount { get; set; }
+
     }
 }

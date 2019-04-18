@@ -7,8 +7,14 @@ namespace Mono.Common
 {
     public class EmbedCollection : IEmbedCollection
     {
-        public ICollection<string> EmbedCollectionOfStrings { get; set; } = new Collection<string>(); 
+        /// <summary>
+        /// Gets or sets EmbedCollectionOfStrings
+        /// </summary>
+        public ICollection<string> EmbedCollectionOfStrings { get; set; } = new Collection<string>();
 
+        /// <summary>
+        /// Gets or sets Embed
+        /// </summary>
         public string Embed
         {
             get
@@ -30,6 +36,10 @@ namespace Mono.Common
             set { }
         }
 
+        /// <summary>
+        /// Constructor . adds first item to collection
+        /// </summary>
+        /// <param name="item"></param>
         public EmbedCollection(string item)
         {
             EmbedCollectionOfStrings.Add(item);

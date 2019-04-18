@@ -73,7 +73,7 @@ namespace Mono.Services
         }
 
         /// <summary>
-        /// Updates VehicleMakes ****
+        /// Updates VehicleMakes 
         /// </summary>
         /// <param name="vehicle"></param>
         /// <param name="id"></param>

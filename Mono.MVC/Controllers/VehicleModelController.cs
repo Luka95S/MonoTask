@@ -65,18 +65,17 @@ namespace Mono.MVC.Controllers
             sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
-            var viewModel = new VehicleModelViewModel();
             IVehicleModel vehicles = mapper.Map<VehicleModel>(vehicleModelService.GetAllVehicles(filter, paging, sort, embed).Result);
-            viewModel.AllVehicleModels = mapper.Map<IEnumerable<VehicleModel>>(vehicles.VehicleModels);
             ViewBag.Previous = paging.Skip == 0 ? false : true;
             ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
-            if (viewModel.AllVehicleModels != null)
+
+            if (vehicles.VehicleModels != null)
             {
                 ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
-                return View(viewModel);
+                return View(mapper.Map<VehicleModelViewModel>(vehicles));
             }
             ViewBag.Message = "There are no VehicleModels in database. Add them!";
-            return View(viewModel);
+            return View(mapper.Map<VehicleModelViewModel>(vehicles));
         }
 
         /// <summary>

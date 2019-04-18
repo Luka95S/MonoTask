@@ -1,6 +1,6 @@
 ﻿@model Mono.MVC.Models.VehicleModelViewModel
 @{
-    ViewData["Title"] = "VehiclesModel";
+    ViewData["Title"] = "Vehicle Models";
 }
 
 <head>
@@ -28,9 +28,9 @@
         <th>Name<i id="name-arrow" class="fas fa-angle-down"></i></th>
         <th>Abrv<i id="abrv-arrow" class="fas fa-angle-down"></i></th>
     </tr>
-    @if (Model.AllVehicleModels != null)
+    @if (Model.VehicleModels != null)
     {
-        @foreach (var vehicleModel in Model.AllVehicleModels)
+        @foreach (var vehicleModel in Model.VehicleModels)
         {
             <tr>
                 <td>@vehicleModel.VehicleMakes?.Name</td>

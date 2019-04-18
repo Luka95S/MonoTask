@@ -1,4 +1,4 @@
-﻿@model Mono.MVC.Models.AllVehiclesViewModel
+﻿@model Mono.MVC.Models.VehicleMakeViewModel
 @{
     ViewData["Title"] = "Moja aplikacija";
 
@@ -25,9 +25,9 @@
         <th>Model Name</th>
         <th>Model Abrv</th>
     </tr>
-    @if(Model.AllVehicles != null)
+    @if(Model.VehicleMakes != null)
     {
-        @foreach (var vehicle in Model.AllVehicles)
+        @foreach (var vehicle in Model.VehicleMakes)
         {
             <tr>
                 <td>@vehicle.Name</td>
