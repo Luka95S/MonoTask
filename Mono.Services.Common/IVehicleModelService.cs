@@ -15,14 +15,14 @@ namespace Mono.Services.Common
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        IEnumerable<IVehicleModel> GetAllVehicles(IFilter filter);
+        Task<IVehicleModel> GetAllVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed);
 
         /// <summary>
         /// Gets VehicleModel by identifier
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        IVehicleModel GetVehicleModel(Guid id);
+        Task<IVehicleModel> GetVehicleModel(Guid id);
 
         /// <summary>
         /// Adds VehicleModel to database
@@ -44,12 +44,5 @@ namespace Mono.Services.Common
         /// <param name="vehicle"></param>
         /// <returns></returns>
         Task<int> UpdateVehicleModelAsync(IVehicleModel vehicle);
-
-        /// <summary>
-        /// Gets VehicleModel count that match searchby
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns></returns>
-        int GetVehicleModelCount(string searchby);
     }
 }

@@ -1,6 +1,6 @@
 ﻿@model Mono.MVC.Models.VehicleModelViewModel
 @{
-    ViewData["Title"] = "VehiclesModel";
+    ViewData["Title"] = "Vehicle Models";
 }
 
 <head>
@@ -28,9 +28,9 @@
         <th>Name<i id="name-arrow" class="fas fa-angle-down"></i></th>
         <th>Abrv<i id="abrv-arrow" class="fas fa-angle-down"></i></th>
     </tr>
-    @if (Model.AllVehicleModels != null)
+    @if (Model.VehicleModels != null)
     {
-        @foreach (var vehicleModel in Model.AllVehicleModels)
+        @foreach (var vehicleModel in Model.VehicleModels)
         {
             <tr>
                 <td>@vehicleModel.VehicleMakes?.Name</td>
@@ -44,8 +44,8 @@
 </table>
 <nav aria-label="Page navigation">
     <ul class="pagination">
-        <li class="page-item"><button class="page-link" id="paging-element-previous" disabled=@(!Model.Previous)>Previous</button></li>
-        <li class="page-item"><button class="page-link" id="paging-element-next" disabled=@(!Model.Next)>Next</button></li>
+        <li class="page-item"><button class="page-link" id="paging-element-previous" disabled=@(!ViewBag.Previous)>Previous</button></li>
+        <li class="page-item"><button class="page-link" id="paging-element-next" disabled=@(!ViewBag.Next)>Next</button></li>
     </ul>
 </nav>
 @section scripts{

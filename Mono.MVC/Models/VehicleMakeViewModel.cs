@@ -38,21 +38,6 @@ namespace Mono.MVC.Models
         /// <summary>
         /// Gets or sets AllVehicleMakes
         /// </summary>
-        public IEnumerable<VehicleMake> AllVehicleMakes { get; set; }
-
-        /// <summary>
-        /// Gets or sets Next
-        /// </summary>
-        public bool Next { get; set; }
-
-        /// <summary>
-        /// Gets or sets Previous
-        /// </summary>
-        public bool Previous { get; set; }
-
-        /// <summary>
-        /// Gets or sets TotalPageCount
-        /// </summary>
-        public int TotalPageCount { get; set; }
+        public IEnumerable<VehicleMake> VehicleMakes { get; set; }
     }
 }

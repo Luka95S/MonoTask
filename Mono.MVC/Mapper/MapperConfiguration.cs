@@ -25,11 +25,7 @@ namespace Mono.MVC.Mapper
             CreateMap<IVehicleModel, VehicleModel>().ReverseMap();
             #endregion
             #region Data View Objects
-            CreateMap<IVehicleMake, AllVehiclesViewModel>()
-                .ForMember(d => d.AllVehicles, o => o.MapFrom(s => s.VehicleModels))
-                .ReverseMap();
-            CreateMap<IVehicleModel, VehicleModelViewModel>()
-                .ForMember(d => d.VehicleName, o => o.Ignore());
+            CreateMap<IVehicleModel, VehicleModelViewModel>();
             CreateMap<VehicleModelViewModel, IVehicleModel>();
             CreateMap<VehicleMakeViewModel, IVehicleMake>()
                 .ForMember(d => d.Name, o => o.MapFrom(s => s.Name))

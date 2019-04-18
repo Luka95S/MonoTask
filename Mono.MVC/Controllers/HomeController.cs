@@ -46,23 +46,25 @@ namespace Mono.MVC.Controllers
         public IActionResult Index([FromQuery(Name = "message")] string message, [FromQuery(Name = "page")]int page = 1, [FromQuery(Name = "sortOrder")] string sortOrder = "asc", [FromQuery(Name = "sortBy")] string sortBy = "name", [FromQuery(Name="searchby")] string searchBy ="")
         {
             var filter = new Filter();
-            filter.Page = page;
-            filter.SortOrder = sortOrder;
-            filter.SortBy = sortBy;
+            var sort = new Sorting();
+            var paging = new Paging();
+            var embed = new EmbedCollection("VehicleModels");
+            paging.Page = page;
+            sort.SortOrder = sortOrder;
+            sort.SortBy = sortBy;
             searchBy = searchBy == null ? "" : searchBy;
             filter.SearchBy = searchBy;
-            var viewModel = new AllVehiclesViewModel();
-            viewModel.AllVehicles = mapper.Map<IEnumerable<VehicleMake>>(vehicleService.GetAllVehicles(filter));
-            if (viewModel.AllVehicles != null)
+            IVehicleMake vehicles = mapper.Map<VehicleMake>(vehicleService.GetAllVehicles(filter, paging, sort, embed).Result);
+            ViewBag.Previous = paging.Skip == 0 ? false : true;
+            ViewBag.Next = vehicles.TotalItemsCount - paging.Skip - paging.NumberOfItems <= 0 ? false : true;
+
+            if (vehicles.VehicleMakes != null)
             {
-                viewModel.TotalPageCount = vehicleService.GetVehicleCount(filter.SearchBy);
-                viewModel.Previous = filter.Skip == 0 ? false : true;
-                viewModel.Next = viewModel.TotalPageCount - filter.Skip - filter.NumberOfItems <= 0 ? false : true;
-                ViewBag.Message = viewModel.AllVehicles.Count() == 0 ? "No search items found! Try again" : message;
-                return View(viewModel);
+                ViewBag.Message = vehicles.TotalItemsCount == 0 ? "No search items found! Try again" : message;
+                return View(mapper.Map<VehicleMakeViewModel>(vehicles));
             }
             ViewBag.Message = "There are no Vehicles in database. Add them!";
-            return View(viewModel); 
+            return View(mapper.Map<VehicleMakeViewModel>(vehicles));
         }
     }
 }

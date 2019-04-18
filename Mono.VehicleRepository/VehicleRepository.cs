@@ -40,54 +40,76 @@ namespace Mono.VehicleRepository
         /// <summary>
         /// Gets VehicleMakes that match passed parameter of filter.SearchBy 
         /// and gets all other parameters for filtering, pagin, sorting that match filter prop.
-        /// Returns IEnumerable of VehicleMake
+        /// Returns VehicleMake
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<IVehicleMake> GetVehicles(IFilter filter)
+        public Task<IVehicleMake> GetVehicles(IFilter filter, IPaging paging, ISorting sort, IEmbedCollection embed)
         {
             if (filter.SearchBy != null)
             {
-                var vehicles = genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(filter.SearchBy) == true).Include("VehicleModels"); //list async testirati
+                paging = paging == null ? new Paging() : paging;
+                sort = sort == null ? new Sorting(): sort;
+                var vehicles = embed?.Embed != null ? genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(filter.SearchBy) == true).Include(embed.Embed) : genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(filter.SearchBy) == true);
+                var count = vehicles.Count();
                 if (vehicles == null)
                 {
                     return null;
                 }
-                switch (filter.SortBy)
+                switch (sort.SortBy)
                 {
                     //name, abrv
                     case "abrv":  // sort by Abrv and asc or desc(depend of SortOrder value)
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
                         break;
                     case "name":  // sort by Name and asc or desc(depend of SortOrder value)
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        break;
+                    default:
+                        vehicles = vehicles.OrderBy(s => s.Name);
                         break;
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
-                vehicles = vehicles.Skip(filter.Skip).Take(filter.NumberOfItems);
-                return mapper.Map<IEnumerable<IVehicleMake>>(vehicles);
+                vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
+
+                var response = new VehicleMake
+                {
+                    VehicleMakes = mapper.Map<IEnumerable<IVehicleMake>>(vehicles),
+                    TotalItemsCount = count
+                };
+                return Task.FromResult(mapper.Map<IVehicleMake>(response));
             }
             else
             {
-                var vehicles =  genericRepository.GetWhereQuery<VehicleMakeModel>().Include("VehicleModels");
-
+                paging = paging == null ? new Paging() : paging;
+                sort = sort == null ? new Sorting() : sort;
+                var vehicles = embed?.Embed != null ? genericRepository.GetWhereQuery<VehicleMakeModel>().Include(embed.Embed) : genericRepository.GetWhereQuery<VehicleMakeModel>();
+                var count = vehicles.Count();
                 if (vehicles == null)
                 {
                     return null;
                 }
-                switch (filter.SortBy)
+                switch (sort.SortBy)
                 {
                     //name, abrv
                     case "abrv":  // sort by Abrv and asc or desc(depend of SortOrder value)
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Abrv) : vehicles.OrderByDescending(s => s.Abrv);
                         break;
                     case "name":  // sort by Name and asc or desc(depend of SortOrder value)
-                        vehicles = filter.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        vehicles = sort.SortOrder == "asc" ? vehicles.OrderBy(s => s.Name) : vehicles.OrderByDescending(s => s.Name);
+                        break;
+                    default:
+                        vehicles = vehicles.OrderBy(s => s.Name);
                         break;
                 }
                 //takes specifit amount of items in vehicle depending on filter prop
-                vehicles = vehicles.Skip(filter.Skip).Take(filter.NumberOfItems);
-                return mapper.Map<IEnumerable<IVehicleMake>>(vehicles);
+                vehicles = vehicles.Skip(paging.Skip).Take(paging.NumberOfItems);
+                var response = new VehicleMake
+                {
+                    VehicleMakes = mapper.Map<IEnumerable<IVehicleMake>>(vehicles),
+                    TotalItemsCount = count
+                };
+                return Task.FromResult(mapper.Map<IVehicleMake>(response));
             }
         }
 
@@ -102,35 +124,13 @@ namespace Mono.VehicleRepository
         }
 
         /// <summary>
-        /// Gets VehicleMake by query parameter for prop: Name
-        /// </summary>
-        /// <param name="query"></param>
-        /// <returns></returns>
-        public IEnumerable<IVehicleMake> GetVehicleQuery(string query)
-        {
-            var vehicle = genericRepository.GetWhereQuery<VehicleMakeModel>().AsQueryable();
-            return mapper.Map<IEnumerable<IVehicleMake>>(vehicle.Where(v => v.Name.StartsWith(query)).ToList());
-        }
-
-        /// <summary>
         /// Gets VehicleMake model by name
         /// </summary>
         /// <param name="name"></param>
         /// <returns>VehicleMake model</returns>
-        public IVehicleMake GetVehicleMakeByName(string name)
+        public Task<IVehicleMake> GetVehicleMakeByName(string name)
         {
-            return mapper.Map<IVehicleMake>(genericRepository.GetWhereQuery<VehicleMakeModel>().AsNoTracking().FirstOrDefault(x => x.Name == name));
-        }
-
-        /// <summary>
-        /// Gets number of items in database by searchby parameter
-        /// </summary>
-        /// <param name="searchby"></param>
-        /// <returns>Integer- number of items</returns>
-        public int GetVehiclesCount(string searchby)
-        {
-            var vehicles = genericRepository.GetWhereQuery<VehicleMakeModel>().Where(x => x.Name.StartsWith(searchby) == true);
-            return vehicles.Count();
+            return Task.FromResult(mapper.Map<IVehicleMake>(genericRepository.GetWhereQuery<VehicleMakeModel>().AsNoTracking().FirstOrDefault(x => x.Name == name)));
         }
 
         /// <summary>
